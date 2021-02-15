@@ -16,8 +16,8 @@ const cartList = [
 cart.get("/", (req, res) => {
   // filteredcart = cartlist
   const price = req.query.price;
-  const prefix = req.query.prefix; 
-  const pageSize = req.query.pageSize; 
+  const prefix = req.query.prefix;
+  const pageSize = req.query.pageSize;
 
   if (price) {
     const newCart = cartList.filter((maxPrice) => {
@@ -25,22 +25,20 @@ cart.get("/", (req, res) => {
     });
     res.json(newCart);
   }
-  
+
   if (prefix) {
     const itemList = cartList.filter((items) => {
-      return items.item.toLowerCase().startsWith(prefix.toLowerCase()); 
+      return items.item.toLowerCase().startsWith(prefix.toLowerCase());
     })
     //startsWith
     res.json(itemList)
-  } 
-
-  if (pageSize) {
-    
   }
 
-
+  if (pageSize) {
+    const newList = cartList.slice(0, parseInt(req.query.pageSize)); 
+    res.json(newList); 
+  }
   res.status(200).json(cartList);
-  
 });
 
 cart.get("/:id", (request, response) => {
@@ -62,7 +60,7 @@ cart.post("/", (req, res) => {
 
 cart.put("/:id", (req, res) => {
   const index = cartList.findIndex((item) => {
-    return item.id === parseInt(req.params.id); 
+    return item.id === parseInt(req.params.id);
   })
   cartList.splice(index, 1, req.body);
   res.status(200).json(cartList);
