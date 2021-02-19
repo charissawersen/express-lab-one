@@ -1,6 +1,7 @@
 const { request, response } = require("express");
 const express = require("express");
 const cart = express.Router();
+const pool = require('./pg-connection-pool');
 
 const cartList = [
   { id: 1, item: "laptop", price: 1500, quantity: 5 },
@@ -35,8 +36,8 @@ cart.get("/", (req, res) => {
   }
 
   if (pageSize) {
-    const newList = cartList.slice(0, parseInt(req.query.pageSize)); 
-    res.json(newList); 
+    const newList = cartList.slice(0, parseInt(req.query.pageSize));
+    res.json(newList);
   }
   res.status(200).json(cartList);
 });
